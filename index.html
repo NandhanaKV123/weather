@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+
+    <!-- css -->
+
+    <link rel="stylesheet" href="./style.css">
+     
+    <!-- bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- fontawesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- googlefonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+
+    
+</head>
+<body>
+    <!-- <div id="container">
+        <img src="https://cdn.pixabay.com/photo/2015/08/30/11/17/shore-914149_1280.jpg" alt="" width="100%" height="720vh">
+        <h1 style="color:white; margin-top: -45%; text-align: center;">SKY SCAPE</h1>
+    </div> -->
+
+    <div class="row-w-100">
+
+        <!-- bg -->
+
+        <h1 style="color: white; margin-top: 2%; text-align: center;">SKYSCAPE</h1>
+         
+
+        <!-- searchbar -->
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid" id="nav">
+                <form class="d-flex ps-5" role="search" style="padding-left: 40%; padding-top: 1%;">
+                  <input id="inputvalue" class="form-contro-expand-lg me-3 rounded" type="search" placeholder="Enter Location" aria-label="Search">
+                  <button class="btn" style="color: white; background-color: green;" type="button" onclick="Search()">Search</button>
+                </form>
+            </div>
+            
+          </nav>
+
+    </div>
+
+    <!-- display -->
+
+    
+        <div id="result">
+            <!-- <div id="display" class="card" style="width: 40rem; height: 450px; margin-top: 3%; margin-left: 3%;">
+                <div class="card-body">
+                    <img src="./images/cloud-removebg-preview.png" alt="" height="160px" >
+                    <div class="text"><h2 style="color: white; padding-bottom: 5%;"><i class="fa-solid fa-location-dot" style="color: #f1f2f3;"></i> LOCATION</h2></div>
+                    <div class="text"><h2 style="color: white; padding-bottom: 5%;"><i class="fa-solid fa-temperature-three-quarters" style="color: #fcfcfd;"></i> TEMPERATURE</h2></div>
+                    <div class="text"><h2 style="color: white; padding-bottom: 5%;"><i class="fa-solid fa-cloud" style="color: #f4f5f5;"></i> WEATHER</h2></div>
+                    <div class="text"><h2 style="color: white; margin-left: 60%; margin-top: -52%; padding-bottom: 2%; ">Humidity</h2></div>
+                    <div class="text"><h2 style="color: white;  margin-left: 60%; padding-bottom: 7%; padding-top: 3%;">Pressure</h2></div>
+                    <div class="text"><h2 style="color: white;  margin-left: 60%; padding-bottom: 6%;">Wind Speed</h2></div>
+                    <div class="text"><h2 style="color: white;  margin-left: 60%;">Feels Like</h2></div>
+                  
+                </div>
+              </div> -->
+        </div>
+    
+</body>
+
+<script>
+
+const Search=async()=>{
+    console.log(inputvalue.value);
+    if(inputvalue.value){
+        const response=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputvalue.value}&appid=5fe36b192ffd1c36dffb6752bc1722b2`)
+        console.log(response);
+        response.json().then((data)=>{
+            console.log(data);
+
+            // location
+
+            const country=data.sys.country
+            console.log(country);
+
+            // temperature
+            const temp=data.main.temp
+            console.log(temp);
+            
+
+            // pressure
+
+            const pressure=data.main.pressure
+            console.log(pressure);
+
+            // wind speed
+            const wind=data.wind.speed
+            console.log(wind);
+
+            // feels like
+
+            const feels=data.main.feels_like
+            console.log(feels);
+
+            // humidity
+
+            const humidity=data.main.humidity
+            console.log(humidity);
+
+            // weather
+            const weather=data.weather[0].main
+            console.log(weather);
+
+            result.innerHTML=`<div id="display" class="card" style="width: 40rem; height: 550px; margin-top: 3%; margin-left: 3%;">
+                <div class="card-body">
+                    <img src="./images/cloud-removebg-preview.png" alt="" height="160px" >
+                    <div class="text"><h2 style="color: white; padding-bottom: 5%;"><i class="fa-solid fa-location-dot" style="color: #f1f2f3;"></i> ${inputvalue.value} , ${country}</h2></div>
+                    <div class="text"><h2 style="color: white; padding-bottom: 5%;"><i class="fa-solid fa-temperature-three-quarters" style="color: #fcfcfd;"></i> ${Math.round(temp-272.15)} °C</h2></div>
+                    <div class="text"><h2 style="color: white; padding-bottom: 5%;"><i class="fa-solid fa-cloud" style="color: #f4f5f5;"></i> ${weather}</h2></div>
+                    <div class="text"><h2 style="color: white; margin-left: 60%; margin-top: -50%; ">HUMIDITY <br>${humidity}%</h2></div>
+                    <div class="text"><h2 style="color: white;  margin-left: 60%; padding-bottom: 7%; padding-top: 3%;">PRESSURE <br> ${pressure} mb</h2></div>
+                    <div class="text"><h2 style="color: white;  margin-left: 60%; padding-bottom: 6%;">WIND SPEED <br> ${wind} Km/h</h2></div>
+                    <div class="text"><h2 style="color: white;  margin-left: 60%;">FEELS LIKE <br> ${feels}</h2></div>
+                  
+                </div>
+              </div>`     
+        })
+        
+    }
+    else{
+        alert(`Please enter location`)
+    }
+    
+}
+
+
+</script>
+</html>
